@@ -1,5 +1,10 @@
 import os, openai
 
+OPENROUTER_CLIENT = openai.OpenAI(
+    api_key=os.environ["OPENROUTER_API_KEY"],
+    base_url="https://openrouter.ai/api/v1"
+)
+
 ASI_CLIENT = openai.OpenAI(
     api_key=os.environ["ASI_API_KEY"],
     base_url="https://inference.asicloud.cudos.org/v1"
@@ -24,6 +29,14 @@ def _chat(client, model, content, max_tokens=6000):
         }
     )
     return _clean(resp.choices[0].message.content)
+
+
+def useOpenRouter(content):
+    return _chat(
+        client=OPENROUTER_CLIENT,
+        model="z-ai/glm-5.1",  # replace with your OpenRouter model id
+        content=content
+    )
 
 def useMiniMax(content):
     return _chat(
