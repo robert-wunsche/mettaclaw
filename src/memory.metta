@@ -54,7 +54,7 @@
                                      (($uuid $time $message $distance) (superpose $queryresults))
                                      ($promotion (py-call (helper.promotion_get_value $uuid 0.0)))
                                      ($lasttime (py-call (helper.promotion_get_lasttime $uuid 0.0)))
-                                     ($t (- (get_time) $lasttime))
+                                     ($t (- $current_time $lasttime))
                                      ($current_promotion (* $promotion (pow-math (+ 1.0 (/ $t 86400.0)) (- 0.0 0.7)))))
                                     ((- 0.0 $current_promotion) $distance $uuid $time $message)))
          (let* (($best (takeK (maxRecallItems) (msort $candidates)))
